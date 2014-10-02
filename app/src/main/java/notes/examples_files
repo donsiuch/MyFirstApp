@@ -1,0 +1,144 @@
+/*
+ * FILE READING/WRITING CODE EXAMPLES
+ *
+ */
+
+import FileManager.FileManager;
+import FileManager.FileWorker;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+	
+	/** DELETE
+	 * Discards the current taskList, reads each line of the records file and populates a new task list
+	 * 
+	 * @param context Context of the calling activity
+	 * @param filename File name 
+	 * @param tasksAsStrings 
+	 * @return void
+	 */
+	public void loadTasksFromFile(Context context, String filename){
+		discardTasks();
+		FileWorker worker = new FileWorker(context, filename);
+		String raw = "";
+		RecordTextProcessor extractor = new RecordTextProcessor();
+		while (raw != null) {
+			raw = worker.readLine(); // Utilizes the 
+			if (raw != null)
+				tasks.add(new Task(extractor.process(raw)));
+		}
+	}
+	
+	/** DELETE
+ 	 * Given a file, write the task list to the file
+	 * 
+	 * @param file File handle
+	 * @return void
+	 */
+	private void writeToFile(File file){
+		try {
+			FileWriter fw = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bw = new BufferedWriter(fw);
+			bw.write(tasks.toString());
+			bw.close();
+		} catch (Exception e){
+			e.printStackTrace();
+		}	
+	}
+	
+	==============================================================
+	
+	/*
+ * KNOWN BUGS
+ * 
+ * DO NOT USE A COMMA AS A DELIMETER! USER CANNOT USE COMMAS IN DESCRIPTION!!!!
+ * 
+ */
+
+package Utility;
+
+import java.util.Calendar;
+import Task.Task;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class RecordTextProcessor {
+	
+	// Key names
+	final private static String MONTH = "MONTH";
+	final private static String DAY = "DAY_OF_MONTH";
+	final private static String YEAR = "YEAR";
+	final private static String HOUR_OF_DAY = "HOUR_OF_DAY";
+	final private static String MINUTE = "MINUTE";
+	final private static String ID = "ID";
+	final private static String DESCRIPTION = "DESCRIPTION";
+	
+	// Denote the character immediately before the key. 
+	// Required to prevent matching a pattern internal to a token
+	// This is not necessary if a database is used
+	final private static String BEGIN_COMMA = ",";
+	final private static String BEGIN_R_BRACKET = "]";
+	
+	// key-value separator 
+	final private static String DELIM = "=";
+	
+	/**
+	 * Given a line from the record text file, extract the relevant values and
+	 * create a new task. Return this task
+	 * 
+	 * @param taskAsString The line from the records file
+	 * @return Task created from the records file
+	 */
+	public Task process(String taskAsString){
+		int month = Integer.parseInt(extractValue(BEGIN_COMMA + MONTH + DELIM, taskAsString));
+		int day = Integer.parseInt(extractValue(BEGIN_COMMA + DAY + DELIM, taskAsString)); //Problem
+		int year = Integer.parseInt(extractValue(BEGIN_COMMA + YEAR + DELIM, taskAsString));
+		int hourOfDay = Integer.parseInt(extractValue(BEGIN_COMMA + HOUR_OF_DAY + DELIM, taskAsString));
+		int minute = Integer.parseInt(extractValue(BEGIN_COMMA + MINUTE + DELIM, taskAsString));
+		int id = Integer.parseInt(extractValue(BEGIN_R_BRACKET + ID + DELIM, taskAsString)); // Problem
+		String description = extractValue(BEGIN_COMMA + DESCRIPTION + DELIM, taskAsString);
+		return new Task(month, day, year, hourOfDay, minute, id, description);
+	}
+	
+	/**
+	 * Given a key, extract the corresponding value from the taskAsString string
+	 * This method is specific to this project. taskAsString has the following format:
+	 * key:value,key:value,
+	 *  
+	 * @param key The key to a corresponding value
+	 * @param taskAsString The entire "hash"
+	 * @return The extracted value
+	 */
+	private String extractValue(String key, String taskAsString){
+		String value = "";
+		int keySize = key.length();
+		//int index = taskAsString.indexOf(key, 0)+keySize;
+		
+		// Regex pattern
+		Pattern pattern = Pattern.compile(key);
+		Matcher matcher = pattern.matcher(taskAsString);
+		matcher.find();
+		int index = matcher.start()+keySize;
+		while (taskAsString.charAt(index) != ','){
+			value += taskAsString.charAt(index);
+			index += 1;
+		}
+		return value;
+	}
+}
+=======================================================
+
+		// Experiment
+		String messageTest = "";
+		try {
+			FileInputStream fin = openFileInput("records.txt");
+			int c;
+			while ((c = fin.read()) != -1) {
+				messageTest = messageTest + Character.toString((char) c);
+			}
+			fin.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
