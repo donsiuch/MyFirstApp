@@ -36,7 +36,7 @@ public class TaskManager {
 	 */
 	public void createNewTask(Context context, int month, int day, int year, int hourOfDay, int minute, int id, String newTaskDescription){
 		Task newTask = new Task(month, day, year, hourOfDay, minute, id, newTaskDescription);
-		if (saveTask(context, newTask))
+		if (storeInDatabase(context, newTask))
 			tasks.add(newTask);
 	}
 	
@@ -46,7 +46,7 @@ public class TaskManager {
 	 * @param task The task to write to database
 	 * @return Returns true if item successfully written to database
 	 */
-	public boolean saveTask(Context context, Task task){
+	public boolean storeInDatabase(Context context, Task task){
 		SQLiteHelperTaskTable worker = new SQLiteHelperTaskTable(context);
 		if (worker.insertTask(task) >= 0)
 			return true;

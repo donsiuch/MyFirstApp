@@ -1,60 +1,100 @@
 package com.example.myfirstapp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
+
+// Views
 import android.view.View;
-import android.view.View.OnClickListener; // Donald: imported to solve onclick errors
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.TextView;
-import android.os.Build;
-import android.content.Intent;
+import android.widget.EditText;
+import android.text.TextWatcher;
+import android.widget.LinearLayout;
+import android.widget.TimePicker;
 
+import Task.Task;
+import Task.TaskManager;
 
+public class DisplayMessageActivity extends ActionBarActivity {
 
-public class DisplayMessageActivity extends ActionBarActivity {	
-	
+    Task currentTask;
+    TaskManager tm;
+
+    public DisplayMessageActivity(){
+        currentTask = new Task();
+        tm = new TaskManager();
+    }
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+        // Enable the app icon as the Up button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		setContentView(R.layout.activity_display_message);
 
-		// Enable the app icon as the Up button
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		
-		TextView text = (TextView)findViewById(R.id.editText1);
-		text.setOnClickListener(new OnClickListener() {
-		    public void onClick(View v) {
-		        System.out.println("Blah");
-		      }
-		  });
-		
-		CalendarView calendar = (CalendarView)findViewById(R.id.calendarView1);
-		calendar.setOnClickListener(new OnClickListener() {
-		    public void onClick(View v) {
-		        System.out.println("Bleh");
-		      }
-		  });
-/*		
-		// Get the "tunnel" intermediate object
-		Intent intent = getIntent();
-		String message = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
-		
-		TextView textView = new TextView(this);
-		textView.setTextSize(40);
-		textView.setText(message);
-		
-		// Set the text as the activity layout
-		setContentView(textView);
-*/
+        // Make the root layout request focus.
+        // Prevents the description from gaining focus first and the keyboard from displaying
+        LinearLayout ll = (LinearLayout)findViewById(R.id.rootDisplayMessageActivityLayout);
+        ll.requestFocus();
+
+        final CalendarView calendar = (CalendarView) findViewById(R.id.calendarView1);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
+                currentTask.setYear(year);
+                currentTask.setMonth(month);
+                currentTask.setDay(day);
+            }
+        });
+
+        final TimePicker time = (TimePicker) findViewById(R.id.timePicker1);
+        time.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker timePickerView, int hour, int minute) {
+                currentTask.setHour(hour);
+                currentTask.setMinute(minute);
+            }
+        });
+
+        final EditText textField = (EditText) findViewById(R.id.editText1);
+        textField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                // Does nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                currentTask.setDescription(textField.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Does nothing
+            }
+        });
+
+        final Button button = (Button) findViewById(R.id.button1);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                boolean result = tm.storeInDatabase(getApplicationContext(), currentTask);
+                if (result)
+                    System.out.println("true");
+                else
+                    System.out.println("false");
+                finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            }
+        });
 	}
 
 	@Override
@@ -80,10 +120,7 @@ public class DisplayMessageActivity extends ActionBarActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_display_message,
-					container, false);
-			return rootView;
+			return inflater.inflate(R.layout.fragment_display_message, container, false);
 		}
 	}
-
 }

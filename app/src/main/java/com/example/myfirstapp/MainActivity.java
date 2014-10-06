@@ -11,18 +11,11 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
 
-import android.app.*;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
 
 //donald
 import android.content.Intent;
@@ -32,7 +25,6 @@ import Task.TaskManager;
 
 // Test comment
 public class MainActivity extends ActionBarActivity {
-	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +46,9 @@ public class MainActivity extends ActionBarActivity {
 	}
 	
 	private void loadTasks (){
-		TaskManager tm = new TaskManager();
-		
-		// # DEBUGGING
-		// TEST DATA: This test data enters a new task and adds to the records file.
-		tm.createNewTask(this, 11, 4, 1985, 00, 00, tm.getSize(), "Nala & Simba like bones.");
-		tm.createNewTask(this, 3, 19, 1989, 00, 00, tm.getSize(), "Tom birthday.");
-		tm.createNewTask(this, 5, 3, 1987, 00, 00, tm.getSize(), "Sara birthday.");
-		tm.createNewTask(this, 11, 20, 1960, 00, 00, tm.getSize(), "Mom birthday.");
-		
+        TaskManager tm = new TaskManager();
 		tm.loadTasks(this);
- 
-		// !!! Note that values is still stored here.
+
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tm.getTaskList().toAdapterStringFormat());
 		ListView lv = (ListView)findViewById(R.id.list);
 		lv.setAdapter(adapter);
@@ -95,25 +78,8 @@ public class MainActivity extends ActionBarActivity {
 	}
 
 	private void newTask() {
-		// Prepare the new activity
-		Intent intent = new Intent(this, DisplayMessageActivity.class);
-		// Obtain a handle to the textBox from the
-		//EditText editText = (EditText) findViewById(R.id.edit_message);
-		// Get the text from the text field
-		//String message = editText.getText().toString();
-
-		//String message = "Test message. MainActivity.newTask()";
-		
-		// When pressing the button, a new task is created, added to the task
-		// list and saved to a file
-		// GET THESE VALUES FROM ANOTHER ACTIVITIE'S USER INPUT
-		//TaskManager tm = new TaskManager();
-		//tm.createNewTask(this, 11, 4, 1985, 16, 23, tm.getSize(), message);
-
-		//intent.putExtra(EXTRA_MESSAGE, message);
-
-		// Start the new activity
-		startActivity(intent);
+		startActivity(new Intent(this, DisplayMessageActivity.class));
+        finish();
 	}
 
 	private static void openSettings(){

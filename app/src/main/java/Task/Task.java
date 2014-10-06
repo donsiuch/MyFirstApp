@@ -27,6 +27,23 @@ public class Task implements Comparable<Task>{
 		description = task.description;
 		taskId = task.taskId;
 	}
+
+    /**
+     * Constructor. Given month, day, time, year, hour, minutes and a task description,
+     * populates the corresponding fields.
+     * @param month Month
+     * @param day Day
+     * @param year Year
+     * @param hourOfDay Hour
+     * @param minute Minute
+     * @param newTaskDescription Task description
+     */
+    public Task(int month, int day, int year, int hourOfDay, int minute, String newTaskDescription){
+        calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hourOfDay, minute);
+        this.taskId = -1;
+        description = newTaskDescription;
+    }
 	
 	/**
 	 * Constructor. Given month, day, time, year, hour, minutes and a task description,
@@ -53,27 +70,16 @@ public class Task implements Comparable<Task>{
 	 * @param year Year
 	 * @param hourOfDay Hour
 	 * @param minute Minute
-	 * @return void
 	 */
 	public void setCalendar(int month, int day, int year, int hourOfDay, int minute){
 		calendar.set(year, month, day, hourOfDay, minute);
 	}
-	
-	/**
-	 * Sets a new task description
-	 * @param newTaskDescription String description of the new task
-	 * @return void
-	 */
-	public void setTask(String newTaskDescription){
-		description = newTaskDescription;
-	}
-	
+
 	/**
 	 * Set the task's unique id
-	 * @param id
-	 * @return void
+	 * @param id Task id
 	 */
-	public void setId(int id){
+	public void setTaskId(int id){
 		this.taskId = id;
 	}
 	
@@ -140,7 +146,57 @@ public class Task implements Comparable<Task>{
 	public Calendar getCalendar(){
 		return calendar;
 	}
-	
+
+    /***
+     * Gets the task's month
+     * @return month
+     */
+    public void setMonth(int month){
+        calendar.set(Calendar.MONTH, month);
+    }
+
+    /***
+     * Gets the task's day
+     * @return day
+     */
+    public void setDay(int day){
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+    }
+
+    /***
+     * Gets the task's year
+     * @return year
+     */
+    public void setYear(int year){
+        calendar.set(Calendar.YEAR, year);
+    }
+
+    /***
+     * Gets the task's hour
+     * @return hour
+     */
+    public void setHour(int hour){
+        calendar.set(Calendar.HOUR, hour);
+    }
+
+    /***
+     * Gets the task's minute
+     * @return
+     */
+    public void setMinute(int minute){
+        calendar.set(Calendar.MINUTE, minute);
+    }
+
+    /**
+     * Sets a new task description
+     * @param newTaskDescription String description of the new task
+     * @return void
+     */
+
+    public void setDescription(String newTaskDescription){
+        description = newTaskDescription;
+    }
+
 	/**
 	 * Compares the unique id's of tasks
 	 * 
@@ -148,7 +204,7 @@ public class Task implements Comparable<Task>{
 	 * @return True if id's are equal, else false
 	 */
 	public boolean equals(Task task){
-		return taskId == task.getTaskId()? true: false;	
+		return calendar == task.getCalendar()? true: false;
 	}
 	
 	/**

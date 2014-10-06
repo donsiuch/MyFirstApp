@@ -21,7 +21,6 @@ public class SQLiteHelperTaskTable extends SQLiteOpenHelper {
 	private static final String YEAR = "year";
 	private static final String HOUR = "hour";
 	private static final String MINUTE = "minute";
-	private static final String TASK_ID = "taskId";
 	private static final String DESCRIPTION = "description";
 	
 	public SQLiteHelperTaskTable(Context context) {
@@ -29,6 +28,11 @@ public class SQLiteHelperTaskTable extends SQLiteOpenHelper {
 	}
 
 	@Override
+    // TO DO -- I removed the restriction on task_id being unique.
+    // need this to be unique!
+    // TASK_ID + " UNIQUE NOT NULL, " +
+    // Can we get rid of the taskId and use just the _id?
+    // Might have to change the task comparison
 	public void onCreate(SQLiteDatabase db) {
 		String CREATE_TASK_TABLE = "CREATE TABLE " + TABLE +
 				"(" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -37,14 +41,13 @@ public class SQLiteHelperTaskTable extends SQLiteOpenHelper {
 				YEAR + " INTEGER NOT NULL, " +
 				HOUR + " INTEGER NOT NULL, " +
 				MINUTE + " INTEGER NOT NULL, " +
-				TASK_ID + " UNIQUE NOT NULL, " + 
 				DESCRIPTION + " VARCHAR(256) NOT NULL)";
 		db.execSQL(CREATE_TASK_TABLE);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABKE IF EXISTS books");
+		db.execSQL("DROP TABLE " + TABLE + ";");
 		this.onCreate(db);
 	}
 	
@@ -64,7 +67,6 @@ public class SQLiteHelperTaskTable extends SQLiteOpenHelper {
         values.put(YEAR, task.getYear());
         values.put(HOUR, task.getHour());
         values.put(MINUTE, task.getMinute());
-        values.put(TASK_ID, task.getTaskId());
         values.put(DESCRIPTION, task.getDescription());
         
         // 3. Insert the row
@@ -87,15 +89,14 @@ public class SQLiteHelperTaskTable extends SQLiteOpenHelper {
  
        // 3. go over each row, build book and add it to list
 	   while (cursor.moveToNext()){
-		   int _id = Integer.parseInt(cursor.getString(0)); // Unused
+		   int _id = Integer.parseInt(cursor.getString(0));
 		   int month = Integer.parseInt(cursor.getString(1));
 		   int day = Integer.parseInt(cursor.getString(2));
 		   int year = Integer.parseInt(cursor.getString(3));
 		   int hour = Integer.parseInt(cursor.getString(4));
 		   int minute = Integer.parseInt(cursor.getString(5));
-		   int taskId = Integer.parseInt(cursor.getString(6));
-		   String description = cursor.getString(7);
-		   taskList.add(new Task(month, day, year, hour, minute, taskId, description));
+		   String description = cursor.getString(6);
+		   taskList.add(new Task(month, day, year, hour, minute, _id, description));
 	   } 
        return taskList;
 	}
