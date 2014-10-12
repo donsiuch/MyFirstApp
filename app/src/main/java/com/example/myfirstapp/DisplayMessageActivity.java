@@ -1,6 +1,9 @@
 package com.example.myfirstapp;
 
+import android.app.AlarmManager;
+import android.content.Context;
 import android.content.Intent;
+import android.provider.AlarmClock;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -17,6 +20,7 @@ import android.widget.EditText;
 import android.text.TextWatcher;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
+import android.app.PendingIntent;
 
 import Task.Task;
 import Task.TaskManager;
@@ -87,10 +91,8 @@ public class DisplayMessageActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 boolean result = tm.storeInDatabase(getApplicationContext(), currentTask);
-                if (result)
-                    System.out.println("true");
-                else
-                    System.out.println("false");
+                AlarmReceiver alarmReceiver = new AlarmReceiver();
+                alarmReceiver.setAlarm(getBaseContext(), currentTask);
                 finish();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }

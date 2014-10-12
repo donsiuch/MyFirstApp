@@ -2,10 +2,12 @@
 <resources>
 
     <string name="app_name">To-Do Lite</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="action_new">Add</string>
     <string name="title_activity_display_message">DisplayMessageActivity</string>
     <string name="description">description</string>
-    
+    <string name="alarm">Alarm</string>
+    <string name="title_activity_alarm">Alarm</string>
+    <string name="hello_world">Hello world!</string>
+
 </resources>

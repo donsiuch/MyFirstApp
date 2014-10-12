@@ -1247,15 +1247,17 @@ containing a value of this type.
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
-        public static final int activity_display_message=0x7f030018;
-        public static final int activity_main=0x7f030019;
-        public static final int fragment_display_message=0x7f03001a;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
+        public static final int activity_alarm=0x7f030018;
+        public static final int activity_display_message=0x7f030019;
+        public static final int activity_main=0x7f03001a;
+        public static final int fragment_display_message=0x7f03001b;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
     }
     public static final class menu {
-        public static final int display_message=0x7f0c0000;
-        public static final int main=0x7f0c0001;
-        public static final int main_activity_actions=0x7f0c0002;
+        public static final int alarm=0x7f0c0000;
+        public static final int display_message=0x7f0c0001;
+        public static final int main=0x7f0c0002;
+        public static final int main_activity_actions=0x7f0c0003;
     }
     public static final class string {
         public static final int abc_action_bar_home_description=0x7f0a0000;
@@ -1273,10 +1275,12 @@ containing a value of this type.
         public static final int abc_shareactionprovider_share_with_application=0x7f0a000c;
         public static final int action_new=0x7f0a000d;
         public static final int action_settings=0x7f0a000e;
-        public static final int app_name=0x7f0a000f;
-        public static final int description=0x7f0a0010;
-        public static final int hello_world=0x7f0a0011;
-        public static final int title_activity_display_message=0x7f0a0012;
+        public static final int alarm=0x7f0a000f;
+        public static final int app_name=0x7f0a0010;
+        public static final int description=0x7f0a0011;
+        public static final int hello_world=0x7f0a0012;
+        public static final int title_activity_alarm=0x7f0a0013;
+        public static final int title_activity_display_message=0x7f0a0014;
     }
     public static final class style {
         /** 

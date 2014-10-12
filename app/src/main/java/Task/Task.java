@@ -120,7 +120,7 @@ public class Task implements Comparable<Task>{
 	 * @return
 	 */
 	public int getMinute(){
-		return calendar.get(Calendar.DAY_OF_MONTH);
+		return calendar.get(Calendar.MINUTE);
 	}
 	
 	/**
@@ -160,7 +160,7 @@ public class Task implements Comparable<Task>{
      * @return day
      */
     public void setDay(int day){
-        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.DATE, day);
     }
 
     /***
@@ -224,7 +224,7 @@ public class Task implements Comparable<Task>{
 	 * @return <calendar>: <task>
 	 */
 	public String toString(){
-		return description;
+		return description + " (" + calendar.getTime() + ")";
 		//return calendar.toString() + "ID=" + taskId + ",DESCRIPTION= " + description + ",";
 	}
 }

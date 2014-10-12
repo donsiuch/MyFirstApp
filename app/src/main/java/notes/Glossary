@@ -1,1 +1,10 @@
+activity = single screen in an app
+
 View = controls (Occam)
+
+Intent is a messaging object you can use to request an action from another app component.
+    (a) start an activity
+    (b) start a service
+    (c) deliver a broadcast
+
+    intent
