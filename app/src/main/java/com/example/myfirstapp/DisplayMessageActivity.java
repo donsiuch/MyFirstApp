@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.text.TextWatcher;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
-import android.app.PendingIntent;
 
 import Task.Task;
 import Task.TaskManager;
