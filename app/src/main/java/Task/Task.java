@@ -1,5 +1,6 @@
 package Task;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Task implements Comparable<Task>{
@@ -14,6 +15,7 @@ public class Task implements Comparable<Task>{
 	 */
 	public Task(){
 		calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
 		description = "";
 		taskId = -1;
 	}
@@ -96,7 +98,7 @@ public class Task implements Comparable<Task>{
 	 * @return day
 	 */
 	public int getDay(){
-		return calendar.get(Calendar.DAY_OF_MONTH);
+		return calendar.get(Calendar.DATE);
 	}
 	
 	/***
@@ -176,7 +178,7 @@ public class Task implements Comparable<Task>{
      * @return hour
      */
     public void setHour(int hour){
-        calendar.set(Calendar.HOUR, hour);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
     }
 
     /***

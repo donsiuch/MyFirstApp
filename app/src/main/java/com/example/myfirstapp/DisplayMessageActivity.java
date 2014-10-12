@@ -48,47 +48,21 @@ public class DisplayMessageActivity extends ActionBarActivity {
         LinearLayout ll = (LinearLayout)findViewById(R.id.rootDisplayMessageActivityLayout);
         ll.requestFocus();
 
-        final CalendarView calendar = (CalendarView) findViewById(R.id.calendarView1);
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
-                currentTask.setYear(year);
-                currentTask.setMonth(month);
-                currentTask.setDay(day);
-            }
-        });
-
-        final TimePicker time = (TimePicker) findViewById(R.id.timePicker1);
-        time.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker timePickerView, int hour, int minute) {
-                currentTask.setHour(hour);
-                currentTask.setMinute(minute);
-            }
-        });
-
-        final EditText textField = (EditText) findViewById(R.id.editText1);
-        textField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                // Does nothing
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                currentTask.setDescription(textField.getText().toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                // Does nothing
-            }
-        });
-
         final Button button = (Button) findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                final CalendarView calendar = (CalendarView) findViewById(R.id.calendarView1);
+                currentTask.getCalendar().setTimeInMillis(calendar.getDate());
+
+                final TimePicker time = (TimePicker) findViewById(R.id.timePicker1);
+                currentTask.setHour(time.getCurrentHour());
+                currentTask.setMinute(time.getCurrentMinute());
+
+                final EditText textField = (EditText) findViewById(R.id.editText1);
+                currentTask.setDescription(textField.getText().toString());
+
                 boolean result = tm.storeInDatabase(getApplicationContext(), currentTask);
                 AlarmReceiver alarmReceiver = new AlarmReceiver();
                 alarmReceiver.setAlarm(getBaseContext(), currentTask);

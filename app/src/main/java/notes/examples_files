@@ -267,3 +267,45 @@ public class FileWorker {
 	}
 }
 
+==============================================================
+
+        final CalendarView calendar = (CalendarView) findViewById(R.id.calendarView1);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
+                //currentTask.setYear(year);
+                //currentTask.setMonth(month);
+                //currentTask.setDay(day);
+                currentTask.getCalendar().setTimeInMillis(calendarView.getDate());
+                System.out.println("Blah");
+            }
+        });
+
+
+
+        final TimePicker time = (TimePicker) findViewById(R.id.timePicker1);
+        time.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker timePickerView, int hour, int minute) {
+                currentTask.setHour(hour);
+                currentTask.setMinute(minute);
+            }
+        });
+
+        final EditText textField = (EditText) findViewById(R.id.editText1);
+        textField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                // Does nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                currentTask.setDescription(textField.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                // Does nothing
+            }
+        });
