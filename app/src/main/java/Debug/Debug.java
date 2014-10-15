@@ -97,9 +97,9 @@ public class Debug {
      * @return True if the write succeeded, else false.
      */
     private boolean writeDebugInfoToFile(String function, String message){
-        if (function != null && message != null && absoluteFilePath != null)
+        if (function == null && message == null && absoluteFilePath == null)
             return false;
         FileManager fm = new FileManager(absoluteFilePath);
-        return fm.writeToFile(function + NEWLINE + TAB + message);
+        return fm.writeToFile(function + NEWLINE + TAB + message + NEWLINE);
     }
 }

@@ -7,10 +7,6 @@ package com.example.myfirstapp;
  * 		- appropriately report error messages (not rooted, sql etc)
  */
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
-
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,6 +15,8 @@ import android.view.MenuItem;
 
 //donald
 import android.content.Intent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import Task.TaskManager;
@@ -30,7 +28,7 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// Loads the main layout
+		// Creates a window and places the UI in it
 		setContentView(R.layout.activity_main);
 		
 		// Populates the main activity layout area
@@ -44,14 +42,35 @@ public class MainActivity extends ActionBarActivity {
 		inflater.inflate(R.menu.main_activity_actions, menu);
 	    return super.onCreateOptionsMenu(menu);
 	}
-	
+
+    /**
+     * Load all the tasks in the database and populate
+     */
 	private void loadTasks (){
         TaskManager tm = new TaskManager();
 		tm.loadTasks(this);
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tm.getTaskList().toAdapterStringFormat());
-		ListView lv = (ListView)findViewById(R.id.list);
+		final ListView lv = (ListView)findViewById(R.id.list);
 		lv.setAdapter(adapter);
+
+        // Simple click go to details?
+        lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
+
+        // Long click change colors
+        lv.setOnLongClickListener(new AdapterView.OnLongClickListener(){
+
+            @Override
+            public boolean onLongClick(View view) {
+                return false;
+            }
+        });
 	}
 
 	@Override
@@ -77,6 +96,7 @@ public class MainActivity extends ActionBarActivity {
 	    }
 	}
 
+    // Create a new task and close this activity
 	private void newTask() {
 		startActivity(new Intent(this, DisplayMessageActivity.class));
         finish();

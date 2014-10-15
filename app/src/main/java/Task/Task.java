@@ -1,6 +1,5 @@
 package Task;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Task implements Comparable<Task>{
@@ -119,7 +118,7 @@ public class Task implements Comparable<Task>{
 	
 	/***
 	 * Gets the task's minute
-	 * @return
+	 * @return Minute (0-59)
 	 */
 	public int getMinute(){
 		return calendar.get(Calendar.MINUTE);
@@ -151,7 +150,7 @@ public class Task implements Comparable<Task>{
 
     /***
      * Gets the task's month
-     * @return month
+     * @param month Month
      */
     public void setMonth(int month){
         calendar.set(Calendar.MONTH, month);
@@ -159,7 +158,7 @@ public class Task implements Comparable<Task>{
 
     /***
      * Gets the task's day
-     * @return day
+     * @param day Day
      */
     public void setDay(int day){
         calendar.set(Calendar.DATE, day);
@@ -167,7 +166,7 @@ public class Task implements Comparable<Task>{
 
     /***
      * Gets the task's year
-     * @return year
+     * @param year Year
      */
     public void setYear(int year){
         calendar.set(Calendar.YEAR, year);
@@ -175,7 +174,7 @@ public class Task implements Comparable<Task>{
 
     /***
      * Gets the task's hour
-     * @return hour
+     * @param hour Hour
      */
     public void setHour(int hour){
         calendar.set(Calendar.HOUR_OF_DAY, hour);
@@ -183,7 +182,7 @@ public class Task implements Comparable<Task>{
 
     /***
      * Gets the task's minute
-     * @return
+     * @param minute Minute
      */
     public void setMinute(int minute){
         calendar.set(Calendar.MINUTE, minute);
@@ -192,17 +191,14 @@ public class Task implements Comparable<Task>{
     /**
      * Sets a new task description
      * @param newTaskDescription String description of the new task
-     * @return void
      */
-
     public void setDescription(String newTaskDescription){
         description = newTaskDescription;
     }
 
 	/**
 	 * Compares the unique id's of tasks
-	 * 
-	 * @param task
+	 * @param task The task to compare
 	 * @return True if id's are equal, else false
 	 */
 	public boolean equals(Task task){
@@ -210,8 +206,7 @@ public class Task implements Comparable<Task>{
 	}
 	
 	/**
-	 * Compares this object with the specified object for order. 
-	 * 
+	 * Compares this object with the specified object for order.
 	 * @param task The task to compare this object to
 	 * @return A negative integer, zero, or a positive integer as 
 	 * this object is less than, equal to, or greater than the specified object.
@@ -222,11 +217,9 @@ public class Task implements Comparable<Task>{
 	
 	/**
 	 * Generates string representation: <calendar>: <task>
-	 * 
 	 * @return <calendar>: <task>
 	 */
 	public String toString(){
 		return description + " (" + calendar.getTime() + ")";
-		//return calendar.toString() + "ID=" + taskId + ",DESCRIPTION= " + description + ",";
 	}
 }

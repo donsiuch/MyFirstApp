@@ -1,23 +1,19 @@
 package com.example.myfirstapp;
 
-import android.app.AlarmManager;
-import android.content.Context;
-import android.content.Intent;
-import android.provider.AlarmClock;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.text.Editable;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
+import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment; // ??
+
+import android.view.LayoutInflater; //??
+import android.view.MenuItem;// ??
 
 // Views
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.View; // ??
+import android.view.ViewGroup; // ??
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-import android.text.TextWatcher;
 import android.widget.LinearLayout;
 import android.widget.TimePicker;
 
@@ -40,30 +36,36 @@ public class DisplayMessageActivity extends ActionBarActivity {
 
         // Enable the app icon as the Up button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
+
+        // Draw the window and load the UI
 		setContentView(R.layout.activity_display_message);
 
         // Make the root layout request focus.
-        // Prevents the description from gaining focus first and the keyboard from displaying
+        // Prevents the description text field from gaining focus first and the keyboard from
+        // displaying
         LinearLayout ll = (LinearLayout)findViewById(R.id.rootDisplayMessageActivityLayout);
         ll.requestFocus();
 
+        // Set up button listener
         final Button button = (Button) findViewById(R.id.button1);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final CalendarView calendar = (CalendarView) findViewById(R.id.calendarView1);
+                // Get the selected date in the calendar
+                CalendarView calendar = (CalendarView) findViewById(R.id.calendarView1);
                 currentTask.getCalendar().setTimeInMillis(calendar.getDate());
 
-                final TimePicker time = (TimePicker) findViewById(R.id.timePicker1);
+                // Get the selected time from TimePicker
+                TimePicker time = (TimePicker) findViewById(R.id.timePicker1);
                 currentTask.setHour(time.getCurrentHour());
                 currentTask.setMinute(time.getCurrentMinute());
 
-                final EditText textField = (EditText) findViewById(R.id.editText1);
+                // Get the description from the text field
+                EditText textField = (EditText) findViewById(R.id.editText1);
                 currentTask.setDescription(textField.getText().toString());
 
-                boolean result = tm.storeInDatabase(getApplicationContext(), currentTask);
+                tm.storeInDatabase(getApplicationContext(), currentTask);
                 AlarmReceiver alarmReceiver = new AlarmReceiver();
                 alarmReceiver.setAlarm(getBaseContext(), currentTask);
                 finish();
