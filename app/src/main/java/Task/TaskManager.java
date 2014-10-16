@@ -48,14 +48,15 @@ public class TaskManager {
 	 */
 	public boolean storeInDatabase(Context context, Task task){
 		SQLiteHelperTaskTable worker = new SQLiteHelperTaskTable(context);
-		if (worker.insertTask(task) >= 0)
+		long row = worker.insertTask(task);
+        if (row >= 0)
 			return true;
 		return false;
 	}
 	
 	/***
 	 * Loads all tasks stored in the database
-	 * @param context The app's current context
+	 * @param context The application's current context
 	 */
 	public void loadTasks(Context context){
 		discardTasks();

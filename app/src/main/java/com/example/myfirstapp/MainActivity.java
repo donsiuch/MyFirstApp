@@ -7,6 +7,7 @@ package com.example.myfirstapp;
  * 		- appropriately report error messages (not rooted, sql etc)
  */
 
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -18,7 +19,10 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Toast;
+import InheritedViews.CustomListView;
+
+import SQLite.SQLiteHelperTaskTable;
 import Task.TaskManager;
 
 // Test comment
@@ -47,30 +51,45 @@ public class MainActivity extends ActionBarActivity {
      * Load all the tasks in the database and populate
      */
 	private void loadTasks (){
-        TaskManager tm = new TaskManager();
+        final TaskManager tm = new TaskManager();
 		tm.loadTasks(this);
 
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tm.getTaskList().toAdapterStringFormat());
-		final ListView lv = (ListView)findViewById(R.id.list);
+		final CustomListView lv = (CustomListView)findViewById(R.id.list);
 		lv.setAdapter(adapter);
+
+        lv.setOnItemLongClickListener(new android.widget.AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                View child = adapterView.getChildAt(i);
+                child.setBackgroundColor(Color.RED);
+                lv.setDelete(true);
+                Toast.makeText(getApplicationContext(), "Delete?", Toast.LENGTH_LONG).show();
+                return true;
+            }
+        });
 
         // Simple click go to details?
         lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                View child = adapterView.getChildAt(i);
 
+                if (lv.getDelete()) {
+                    SQLiteHelperTaskTable sql = new SQLiteHelperTaskTable(getApplicationContext());
+
+                    // INSERT CODE TO GRAB THE ID OF THE CURRENT ITEM
+                    // SO IT CAN BE PASSED AND DELETED FROM THE DATABASE
+                    // THIS REQUIRES: CustomArrayAdapter
+                    sql.deleteTask(3);
+
+                    // INSERT CODE TO REFRESH THE LISTVIEW!
+                }
             }
         });
 
-        // Long click change colors
-        lv.setOnLongClickListener(new AdapterView.OnLongClickListener(){
 
-            @Override
-            public boolean onLongClick(View view) {
-                return false;
-            }
-        });
 	}
 
 	@Override

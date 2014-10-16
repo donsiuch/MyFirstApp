@@ -68,15 +68,23 @@ public class SQLiteHelperTaskTable extends SQLiteOpenHelper {
         values.put(HOUR, task.getHour());
         values.put(MINUTE, task.getMinute());
         values.put(DESCRIPTION, task.getDescription());
-        
-        // 3. Insert the row
-        long result = db.insert(TABLE, null, values);
-        
-        // 4. Close
+
+        long rowId = db.insert(TABLE, null, values);
         db.close();
-        
-        return result;
+        return rowId;
 	}
+
+    /**
+     * Give an _id, delete the row that corresponds to that _id
+     * @param _id The _id in the table
+     * @return The number of rows deleted
+     */
+    public long deleteTask (long _id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        int rowsAffected = db.delete(TABLE, ID +" = " + _id, null);
+        db.close();
+        return rowsAffected;
+    }
 	
 	public TaskList getTasks(){
 		TaskList taskList = new TaskList();
