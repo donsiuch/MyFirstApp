@@ -18,8 +18,10 @@ import android.view.MenuItem;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import InheritedViews.CustomArrayAdapter;
 import InheritedViews.CustomListView;
 
 import SQLite.SQLiteHelperTaskTable;
@@ -54,24 +56,39 @@ public class MainActivity extends ActionBarActivity {
         final TaskManager tm = new TaskManager();
 		tm.loadTasks(this);
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tm.getTaskList().toAdapterStringFormat());
-		final CustomListView lv = (CustomListView)findViewById(R.id.list);
-		lv.setAdapter(adapter);
+        // Passes the resource custom_list_view_row to CustomArrayAdapter
+        // The fields that can be populated by CustomArrayAdapter are defined in this resource file
+        // This can be though of as describing to the adapter what the rows should look like
+        CustomArrayAdapter adapter = new CustomArrayAdapter(this, R.layout.custom_list_view_row, tm.getTaskList().getTaskLinkedList());
 
+        // Defines the CustomListView.
+        // This may NOT be needed since we defined the rows above
+        final CustomListView lv = (CustomListView)findViewById(R.id.customListView);
+
+        // Tie CustomListView with the adapter custom rows
+        lv.setAdapter(adapter);
+
+        // Set the event handler
         lv.setOnItemLongClickListener(new android.widget.AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 View child = adapterView.getChildAt(i);
-                child.setBackgroundColor(Color.RED);
-                lv.setDelete(true);
-                Toast.makeText(getApplicationContext(), "Delete?", Toast.LENGTH_LONG).show();
-                return true;
+
+                if (!lv.getDelete()) {
+                    child.setBackgroundColor(Color.RED);
+                    lv.setDelete(true);
+                    Toast.makeText(getApplicationContext(), "Marked for deletion.", Toast.LENGTH_LONG).show();
+                    return true;
+                }
+
+                child.setBackgroundColor(Color.TRANSPARENT);
+                lv.setDelete(false);
+                Toast.makeText(getApplicationContext(), "Removing mark for deletion.", Toast.LENGTH_LONG).show();
+                return false;
             }
         });
 
-        // Simple click go to details?
         lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
-
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 View child = adapterView.getChildAt(i);
@@ -79,17 +96,22 @@ public class MainActivity extends ActionBarActivity {
                 if (lv.getDelete()) {
                     SQLiteHelperTaskTable sql = new SQLiteHelperTaskTable(getApplicationContext());
 
-                    // INSERT CODE TO GRAB THE ID OF THE CURRENT ITEM
-                    // SO IT CAN BE PASSED AND DELETED FROM THE DATABASE
-                    // THIS REQUIRES: CustomArrayAdapter
-                    sql.deleteTask(3);
+                    // Get the nested view: custom_list_view_row.xml
+                    // At index zero since it is the first and only child
+                    View row = lv.getChildAt(0);
+
+                    // Get the textView child embedded in custom_list_view_row.xml
+                    TextView _id_textView = (TextView)row.findViewById(R.id._id);
+
+                    // Convert the text to a lon
+                    long _id = Long.parseLong(_id_textView.getText().toString());
+
+                    sql.deleteTask(_id);
 
                     // INSERT CODE TO REFRESH THE LISTVIEW!
                 }
             }
         });
-
-
 	}
 
 	@Override

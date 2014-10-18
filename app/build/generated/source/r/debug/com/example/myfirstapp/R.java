@@ -1133,6 +1133,7 @@ containing a value of this type.
         public static final int ic_launcher=0x7f020059;
     }
     public static final class id {
+        public static final int _id=0x7f070055;
         public static final int action_bar=0x7f07002d;
         public static final int action_bar_activity_content=0x7f070025;
         public static final int action_bar_container=0x7f07002c;
@@ -1144,8 +1145,8 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f070026;
         public static final int action_menu_presenter=0x7f070027;
         public static final int action_mode_close_button=0x7f070035;
-        public static final int action_new=0x7f070054;
-        public static final int action_settings=0x7f070053;
+        public static final int action_new=0x7f070057;
+        public static final int action_settings=0x7f070056;
         public static final int activity_chooser_view_content=0x7f070036;
         public static final int alignBounds=0x7f07000b;
         public static final int alignMargins=0x7f07000c;
@@ -1161,7 +1162,9 @@ containing a value of this type.
         public static final int clip_horizontal=0x7f070018;
         public static final int clip_vertical=0x7f070017;
         public static final int collapseActionView=0x7f070022;
+        public static final int customListView=0x7f070053;
         public static final int default_activity_button=0x7f070039;
+        public static final int description=0x7f070054;
         public static final int dialog=0x7f070023;
         public static final int disableHome=0x7f070008;
         public static final int dropdown=0x7f070024;
@@ -1180,9 +1183,9 @@ containing a value of this type.
         public static final int ifRoom=0x7f07001f;
         public static final int image=0x7f070038;
         public static final int left=0x7f07000f;
-        public static final int list=0x7f070052;
         public static final int listMode=0x7f070001;
         public static final int list_item=0x7f07003a;
+        public static final int mainActivityLayout=0x7f070052;
         public static final int middle=0x7f07001d;
         public static final int never=0x7f07001e;
         public static final int none=0x7f07001b;
@@ -1250,8 +1253,9 @@ containing a value of this type.
         public static final int activity_alarm=0x7f030018;
         public static final int activity_display_message=0x7f030019;
         public static final int activity_main=0x7f03001a;
-        public static final int fragment_display_message=0x7f03001b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001c;
+        public static final int custom_list_view_row=0x7f03001b;
+        public static final int fragment_display_message=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
         public static final int alarm=0x7f0c0000;

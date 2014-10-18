@@ -1,0 +1,6 @@
+Creating tasks:
+- When create more then 1 task without the first firing, no tasks fire
+
+Deleting tasks
+- When deleting tasks the screen never refreshes
+- Cannot delete more then 1 task at a time without restarting the application.

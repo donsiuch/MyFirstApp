@@ -43,6 +43,14 @@ public class TaskList {
 			Collections.sort(taskList);
 		return isSuccessful;
 	}
+
+    /**
+     * Returns a reference to the internal linked list storage data structure
+     * @return Linked list storage structure
+     */
+    public LinkedList<Task> getTaskLinkedList(){
+        return taskList;
+    }
 	
 	/**
 	 * Deletes a given task
