@@ -7,27 +7,22 @@ package com.example.myfirstapp;
  * 		- appropriately report error messages (not rooted, sql etc)
  */
 
+import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-
-//donald
-import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import InheritedViews.CustomArrayAdapter;
 import InheritedViews.CustomListView;
-
 import SQLite.SQLiteHelperTaskTable;
 import Task.TaskManager;
 
-// Test comment
 public class MainActivity extends ActionBarActivity {
 
 	@Override
@@ -91,8 +86,8 @@ public class MainActivity extends ActionBarActivity {
         lv.setOnItemClickListener(new android.widget.AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                View child = adapterView.getChildAt(i);
 
+                // If marked for deletion, delete.
                 if (lv.getDelete()) {
                     SQLiteHelperTaskTable sql = new SQLiteHelperTaskTable(getApplicationContext());
 

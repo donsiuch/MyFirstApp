@@ -7,10 +7,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
-
-import Task.Task;
 import Debug.Debug;
 import FileManager.FileManager;
+import Task.Task;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
@@ -26,9 +25,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent intent = new Intent(context, Alarm.class);
         Bundle bundle = new Bundle();
         bundle.putString("description", i.getStringExtra("description"));
+        String temp = i.getStringExtra("description");
         intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
         context.startActivity(intent);
     }
 
