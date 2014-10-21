@@ -16,7 +16,7 @@ public class TaskManager {
 	 * Discards tasks and creates a new emty task list
 	 * @return null
 	 */
-	private void discardTasks(){
+	public void discardTasks(){
 		tasks = null;
 		tasks = new TaskList();
 	}

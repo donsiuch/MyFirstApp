@@ -44,7 +44,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context,AlarmReceiver.class);
         intent.putExtra("description", task.getDescription());
-        PendingIntent pi = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Creates a unique PendingIntent. This is done by passing the unique current time
+        PendingIntent pi = PendingIntent.getBroadcast(context, (int)System.currentTimeMillis(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmManager.setExact(AlarmManager.RTC_WAKEUP, task.getCalendar().getTimeInMillis(), pi);
         Toast.makeText(context, "Scheduled" + task.toString(), Toast.LENGTH_LONG).show();
     }

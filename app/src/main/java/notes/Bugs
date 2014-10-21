@@ -1,6 +1,19 @@
 Creating tasks:
-- When create more then 1 task without the first firing, no tasks fire
+- (Done) Each next task created over rides the previous Alarm Manager registration. Need to give unique
+information to PendingIntent.getBroadcast
 
 Deleting tasks
-- When deleting tasks the screen never refreshes
-- Cannot delete more then 1 task at a time without restarting the application.
+- (Done) When deleting tasks the screen never refreshes
+- (Done) Cannot delete more then 1 task at a time without restarting the application.
+- When marking a task for deletion, any other task can be deleted. This is most likely due to
+the delete member field as part of the list view and not the child. Add a new field to
+cusomt_list_view_row.xml
+
+Task:
+-Taskid data member is of type int, however type long corresponds to the rows of the database.
+Further, must pass an a unique integer to getBroadcast() when creating a new intent. If I change the
+taskId to long then I cannot use the taskId any longer.
+
+Cleanup:
+- Move the setAlaram() function to AlarmManager class
+

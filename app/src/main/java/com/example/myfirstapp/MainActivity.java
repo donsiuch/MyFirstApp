@@ -18,9 +18,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.List;
+
 import InheritedViews.CustomArrayAdapter;
 import InheritedViews.CustomListView;
 import SQLite.SQLiteHelperTaskTable;
+import Task.Task;
 import Task.TaskManager;
 
 public class MainActivity extends ActionBarActivity {
@@ -54,7 +58,7 @@ public class MainActivity extends ActionBarActivity {
         // Passes the resource custom_list_view_row to CustomArrayAdapter
         // The fields that can be populated by CustomArrayAdapter are defined in this resource file
         // This can be though of as describing to the adapter what the rows should look like
-        CustomArrayAdapter adapter = new CustomArrayAdapter(this, R.layout.custom_list_view_row, tm.getTaskList().getTaskLinkedList());
+        final CustomArrayAdapter adapter = new CustomArrayAdapter(this, R.layout.custom_list_view_row, tm.getTaskList().getTaskLinkedList());
 
         // Defines the CustomListView.
         // This may NOT be needed since we defined the rows above
@@ -93,7 +97,7 @@ public class MainActivity extends ActionBarActivity {
 
                     // Get the nested view: custom_list_view_row.xml
                     // At index zero since it is the first and only child
-                    View row = lv.getChildAt(0);
+                    View row = lv.getChildAt(i);
 
                     // Get the textView child embedded in custom_list_view_row.xml
                     TextView _id_textView = (TextView)row.findViewById(R.id._id);
@@ -103,11 +107,23 @@ public class MainActivity extends ActionBarActivity {
 
                     sql.deleteTask(_id);
 
-                    // INSERT CODE TO REFRESH THE LISTVIEW!
+                    refreshCustomListView(adapter, tm);
                 }
             }
         });
 	}
+
+    /**
+     * Refreshes the list view
+     */
+    private void refreshCustomListView(CustomArrayAdapter adapter, TaskManager tm){
+        tm.discardTasks();
+        tm.loadTasks(this);
+        List<Task> newItems = tm.getTaskList().getTaskLinkedList();
+        adapter.clear();
+        adapter.addAll(newItems);
+        adapter.notifyDataSetChanged();
+    }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
