@@ -1145,8 +1145,8 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f070026;
         public static final int action_menu_presenter=0x7f070027;
         public static final int action_mode_close_button=0x7f070035;
-        public static final int action_new=0x7f070058;
-        public static final int action_settings=0x7f070057;
+        public static final int action_new=0x7f070059;
+        public static final int action_settings=0x7f070058;
         public static final int activity_chooser_view_content=0x7f070036;
         public static final int alarmMessage=0x7f07004d;
         public static final int alignBounds=0x7f07000b;
@@ -1165,6 +1165,7 @@ containing a value of this type.
         public static final int collapseActionView=0x7f070022;
         public static final int customListView=0x7f070054;
         public static final int default_activity_button=0x7f070039;
+        public static final int delete=0x7f070057;
         public static final int description=0x7f070055;
         public static final int dialog=0x7f070023;
         public static final int disableHome=0x7f070008;

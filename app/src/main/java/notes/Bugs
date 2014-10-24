@@ -15,5 +15,10 @@ Further, must pass an a unique integer to getBroadcast() when creating a new int
 taskId to long then I cannot use the taskId any longer.
 
 Cleanup:
-- Move the setAlaram() function to AlarmManager class
+- (Done) Move the setAlarm() function to AlarmManager class
+
+Debugging:
+- Currently, cannot read the log file from the adb shell due to no text editor application.
+- Implement logging and debugging
+- Cannot append to files
 

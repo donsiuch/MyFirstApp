@@ -66,8 +66,8 @@ public class DisplayMessageActivity extends ActionBarActivity {
                 currentTask.setDescription(textField.getText().toString());
 
                 tm.storeInDatabase(getApplicationContext(), currentTask);
-                AlarmReceiver alarmReceiver = new AlarmReceiver();
-                alarmReceiver.setAlarm(getBaseContext(), currentTask);
+                AlarmManager alarmManager = new AlarmManager();
+                alarmManager.setAlarm(getBaseContext(), currentTask);
                 finish();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }

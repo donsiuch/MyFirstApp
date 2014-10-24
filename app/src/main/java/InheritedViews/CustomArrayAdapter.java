@@ -20,12 +20,19 @@ public class CustomArrayAdapter extends ArrayAdapter {
     {
         TextView description;
         TextView _id;
+        TextView delete;
     }
 
-    Context context;
-    int layoutResourceId;
-    List<Task> taskList = null;
+    private Context context;
+    private int layoutResourceId;
+    private List<Task> taskList;
 
+    /**
+     * Constructor
+     * @param context Application's context
+     * @param resourceId ???
+     * @param taskList A list of all saved tasks
+     */
     public CustomArrayAdapter(Context context, int resourceId, List<Task> taskList){
         super(context,resourceId, taskList);
         this.context = context;
@@ -33,6 +40,13 @@ public class CustomArrayAdapter extends ArrayAdapter {
         this.taskList = taskList;
     }
 
+    /**
+     *
+     * @param position Which row from the list
+     * @param convertView
+     * @param parent
+     * @return
+     */
     public View getView(int position, View convertView, ViewGroup parent){
         View row = convertView;
         StaticTaskDisplayComponentContainer container = null;
@@ -46,19 +60,30 @@ public class CustomArrayAdapter extends ArrayAdapter {
 
             // "view holder" pattern
             container = new StaticTaskDisplayComponentContainer();
+
+            // "view holder" pattern
+            // Bind the reference to the actual views to the static object's fields
             container._id = (TextView)row.findViewById(R.id._id);
             container.description = (TextView)row.findViewById(R.id.description);
+            container.delete = (TextView)row.findViewById(R.id.delete);
 
+            // Provide some kind of glue to the actual row in the list view
             row.setTag(container);
         }
 
+        // Else, the row extists...
         else
+            // Get the reference to the row.
             container = (StaticTaskDisplayComponentContainer)row.getTag();
 
         // "view holder" pattern
         Task task = taskList.get(position);
+
+        // "view holder" pattern
+        // Bind the values from the task to the fields
         container._id.setText(""+task.getTaskId());
         container.description.setText(task.getDescription());
+        container.delete.setText("false");
 
         return row;
     }

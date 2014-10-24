@@ -23,4 +23,9 @@
         android:layout_height="fill_parent"
         android:visibility="invisible"/>
 
+    <TextView android:id="@+id/delete"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="invisible"/>
+
 </LinearLayout>

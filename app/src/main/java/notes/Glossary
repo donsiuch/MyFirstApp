@@ -8,5 +8,4 @@ Intent is a messaging object you can use to request an action from another app c
     (c) deliver a broadcast
 
 PendingIntent is simply a reference to a token maintained by the system describing the original data
-used to retrieve it.simply a reference to a token maintained by the system describing the original
-data used to retrieve it.
+used to retrieve it.

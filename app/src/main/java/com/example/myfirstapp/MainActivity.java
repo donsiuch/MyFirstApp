@@ -73,15 +73,26 @@ public class MainActivity extends ActionBarActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 View child = adapterView.getChildAt(i);
 
-                if (!lv.getDelete()) {
+                // At index zero since it is the first and only child
+                View row = lv.getChildAt(i);
+
+                // Get the nested view: custom_list_view_row.xml
+                // Get the textView child embedded in custom_list_view_row.xml
+                TextView delete_textView = (TextView)row.findViewById(R.id.delete);
+
+                String deleteIndicator = delete_textView.getText().toString();
+
+                if (deleteIndicator.equals("false")) {
                     child.setBackgroundColor(Color.RED);
-                    lv.setDelete(true);
+                    //lv.setDelete(true);
+                    delete_textView.setText("true");
                     Toast.makeText(getApplicationContext(), "Marked for deletion.", Toast.LENGTH_LONG).show();
                     return true;
                 }
 
                 child.setBackgroundColor(Color.TRANSPARENT);
-                lv.setDelete(false);
+                //lv.setDelete(false);
+                delete_textView.setText("false");
                 Toast.makeText(getApplicationContext(), "Removing mark for deletion.", Toast.LENGTH_LONG).show();
                 return false;
             }
@@ -91,13 +102,22 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                // At index zero since it is the first and only child
+                View row = lv.getChildAt(i);
+
+                // Get the nested view: custom_list_view_row.xml
+                // Get the textView child embedded in custom_list_view_row.xml
+                TextView delete_textView = (TextView)row.findViewById(R.id.delete);
+
+                String deleteIndicator = delete_textView.getText().toString();
+
                 // If marked for deletion, delete.
-                if (lv.getDelete()) {
+                if (deleteIndicator.equals("true")) {
                     SQLiteHelperTaskTable sql = new SQLiteHelperTaskTable(getApplicationContext());
 
                     // Get the nested view: custom_list_view_row.xml
                     // At index zero since it is the first and only child
-                    View row = lv.getChildAt(i);
+                    //View row = lv.getChildAt(i);
 
                     // Get the textView child embedded in custom_list_view_row.xml
                     TextView _id_textView = (TextView)row.findViewById(R.id._id);
